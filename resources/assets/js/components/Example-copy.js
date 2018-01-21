@@ -26,12 +26,11 @@ export default class Example extends Component {
         return this.state.pitchers.map(
             (pitcher,index) => {
                 return (
-                    <div style={{display:"inline-flex"}}>
-                        <span>{pitcher.name}</span>
-                    <div key={pitcher.key} className="maru size_normal pink1">
-                        <div className="letter3" onClick={this.addWin.bind(this,index)}>{pitcher.win}</div>
-                    </div>
-                    </div>
+                    <li key={pitcher.key} id={pitcher.key}>
+                        <p>スキル : {pitcher.name}</p>
+                        <p onClick={this.addWin.bind(this,index)}>スコア : {pitcher.win}</p>
+                        <p>防御率 : {pitcher.era}</p>
+                    </li>
                 );
             }
         );
@@ -49,8 +48,11 @@ export default class Example extends Component {
                     <div className="col-md-8 col-md-offset-2">
                         <div className="panel panel-default">
                             <div className="panel-heading">Example Component</div>
+
                             <div className="panel-body">
+                                <ul>
                                     {this.renderPitchers()}
+                                </ul>
                             </div>
                         </div>
                     </div>
