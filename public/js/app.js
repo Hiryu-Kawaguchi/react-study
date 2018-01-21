@@ -7147,9 +7147,7 @@ var Example = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Example.__proto__ || Object.getPrototypeOf(Example)).call(this));
 
         _this.state = {
-            pitchers: [],
-            count: 0,
-            pitcherwin: 0
+            pitchers: []
         };
         return _this;
     }
@@ -7162,8 +7160,12 @@ var Example = function (_Component) {
             fetch('/api/foo').then(function (response) {
                 return response.json();
             }).then(function (objects) {
+                objects.sort(function (a, b) {
+                    if (a.win < b.win) return 1;
+                    if (a.win > b.win) return -1;
+                    return 0;
+                });
                 _this2.setState({ pitchers: objects });
-                _this2.setState({ pitcherwin: objects[0]["win"] });
             });
         }
     }, {
@@ -7174,7 +7176,7 @@ var Example = function (_Component) {
             return this.state.pitchers.map(function (pitcher, index) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { style: { display: "inline-flex" } },
+                    { key: pitcher.key, style: { display: "inline-flex" } },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'span',
                         null,
@@ -7182,7 +7184,7 @@ var Example = function (_Component) {
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { key: pitcher.key, className: 'maru size_normal pink1' },
+                        { className: 'maru size_normal pink1' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: 'letter3', onClick: _this3.addWin.bind(_this3, index) },

@@ -5,9 +5,7 @@ export default class Example extends Component {
     constructor() {
         super();
         this.state = {
-            pitchers: [],
-            count: 0,
-            pitcherwin:0
+            pitchers: []
         };
     }
     componentDidMount() {
@@ -17,8 +15,12 @@ export default class Example extends Component {
             }
         ).then(
             objects => {
+                objects.sort((a, b) => {
+                    if (a.win < b.win) return 1;
+                    if (a.win > b.win) return -1;
+                    return 0;
+                });
                 this.setState({pitchers:objects});
-                this.setState({pitcherwin:objects[0]["win"]});
             }
         );
     }
@@ -26,9 +28,9 @@ export default class Example extends Component {
         return this.state.pitchers.map(
             (pitcher,index) => {
                 return (
-                    <div style={{display:"inline-flex"}}>
+                    <div key={pitcher.key} style={{display:"inline-flex"}}>
                         <span>{pitcher.name}</span>
-                    <div key={pitcher.key} className="maru size_normal pink1">
+                    <div className="maru size_normal pink1">
                         <div className="letter3" onClick={this.addWin.bind(this,index)}>{pitcher.win}</div>
                     </div>
                     </div>
