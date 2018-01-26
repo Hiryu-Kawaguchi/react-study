@@ -28,11 +28,14 @@ export default class Example extends Component {
         return this.state.pitchers.map(
             (pitcher,index) => {
                 return (
-                    <div key={pitcher.key} style={{display:"inline-flex"}}>
-                        <span>{pitcher.name}</span>
+                    <div key={pitcher.key} style={{display:"flex"}}>
+                        <span >{pitcher.name}</span>
                     <div className="maru size_normal pink1">
                         <div className="letter3" onClick={this.addWin.bind(this,index)}>{pitcher.win}</div>
                     </div>
+                        <div>
+                            <span>いいねしている人を表示</span>
+                        </div>
                     </div>
                 );
             }
@@ -48,9 +51,11 @@ export default class Example extends Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-md-8 col-md-offset-2">
+                    <div className="col-sm-2"></div>
+                    <div className="col-sm-2"></div>
+                    <div className="col-sm-8">
                         <div className="panel panel-default">
-                            <div className="panel-heading">Example Component</div>
+                            <div className="panel-heading">スキルと特徴</div>
                             <div className="panel-body">
                                     {this.renderPitchers()}
                             </div>

@@ -7176,7 +7176,7 @@ var Example = function (_Component) {
             return this.state.pitchers.map(function (pitcher, index) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { key: pitcher.key, style: { display: "inline-flex" } },
+                    { key: pitcher.key, style: { display: "flex" } },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'span',
                         null,
@@ -7189,6 +7189,15 @@ var Example = function (_Component) {
                             'div',
                             { className: 'letter3', onClick: _this3.addWin.bind(_this3, index) },
                             pitcher.win
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'span',
+                            null,
+                            '\u3044\u3044\u306D\u3057\u3066\u3044\u308B\u4EBA\u3092\u8868\u793A'
                         )
                     )
                 );
@@ -7210,16 +7219,18 @@ var Example = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'row' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-sm-2' }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'col-sm-2' }),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'col-md-8 col-md-offset-2' },
+                        { className: 'col-sm-8' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: 'panel panel-default' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
                                 { className: 'panel-heading' },
-                                'Example Component'
+                                '\u30B9\u30AD\u30EB\u3068\u7279\u5FB4'
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',

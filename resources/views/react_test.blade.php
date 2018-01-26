@@ -9,7 +9,7 @@
 <style>
     /* 円の基本形 */
     .maru {
-        display: inline-flex;
+        display: flex;
         justify-content: center;
         align-items: center;
         border-radius: 50%;
