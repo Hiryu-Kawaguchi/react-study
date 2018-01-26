@@ -15,3 +15,4 @@ mix.react('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
 
 mix.react('resources/assets/js/components/Example.js', 'public/js/app.js');
+mix.react('resources/assets/js/components/Header.js', 'public/js/app.js');

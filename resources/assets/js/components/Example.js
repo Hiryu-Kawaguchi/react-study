@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Header from './Header';
 
 export default class Example extends Component {
     constructor() {
         super();
         this.state = {
-            pitchers: []
+            pitchers: [],
+            name : "hiryu"
         };
     }
     componentDidMount() {
@@ -20,6 +22,11 @@ export default class Example extends Component {
                     if (a.win > b.win) return -1;
                     return 0;
                 });
+                for(let pitcher in objects) {
+                    if(objects.hasOwnProperty(pitcher)) {
+                        objects[pitcher]['clicked'] = false;
+                    }
+                }
                 this.setState({pitchers:objects});
             }
         );
@@ -50,12 +57,13 @@ export default class Example extends Component {
     render() {
         return (
             <div className="container">
+                <Header name={this.state.name}/>
                 <div className="row">
                     <div className="col-sm-2"></div>
                     <div className="col-sm-2"></div>
                     <div className="col-sm-8">
                         <div className="panel panel-default">
-                            <div className="panel-heading">スキルと特徴</div>
+                            <div className="panel-heading"></div>
                             <div className="panel-body">
                                     {this.renderPitchers()}
                             </div>
