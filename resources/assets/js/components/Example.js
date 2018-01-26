@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Header from './Header';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import MyAwesomeReactComponent from './MyAwesomeReactComponent';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+injectTapEventPlugin();
 
 export default class Example extends Component {
     constructor() {
@@ -54,23 +59,30 @@ export default class Example extends Component {
         pit[i]["win"] = pit[i]["win"] + 1;
         this.setState({pitchers : pit});
     }
-    render() {
+    // render() {
+    //     return (
+    //         <div className="container">
+    //             <Header name={this.state.name}/>
+    //             <div className="row">
+    //                 <div className="col-sm-2"></div>
+    //                 <div className="col-sm-2"></div>
+    //                 <div className="col-sm-8">
+    //                     <div className="panel panel-default">
+    //                         <div className="panel-heading"></div>
+    //                         <div className="panel-body">
+    //                                 {this.renderPitchers()}
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     );
+    // }
+    render(){
         return (
-            <div className="container">
-                <Header name={this.state.name}/>
-                <div className="row">
-                    <div className="col-sm-2"></div>
-                    <div className="col-sm-2"></div>
-                    <div className="col-sm-8">
-                        <div className="panel panel-default">
-                            <div className="panel-heading"></div>
-                            <div className="panel-body">
-                                    {this.renderPitchers()}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <MuiThemeProvider>
+                <MyAwesomeReactComponent />
+            </MuiThemeProvider>
         );
     }
 }
