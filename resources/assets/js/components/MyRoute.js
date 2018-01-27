@@ -9,14 +9,14 @@ class MyRoute extends React.Component {
             <BrowserRouter>
                 <div>
                     <ul>
-                        <li><Link to='/test/react'>Home</Link></li>
+                        <li><Link to='/'>Home</Link></li>
                         {/*<li><Link to='/test/react/about'>About</Link></li>*/}
-                        <li><Link to='/test/react/Profile'>Profile</Link></li>
+                        <li><Link to='/Profile'>Profile</Link></li>
                     </ul>
                     <hr />
-                    <Route exact path='/test/react' component={Home} />
+                    <Route exact path='/' component={Home} />
                     {/*<Route path='/test/react/about' component={MyAwesomeReactComponent} />*/}
-                    <Route path='/test/react/Profile' component={MyAwesomeReactComponent} />
+                    <Route path='/Profile' component={MyAwesomeReactComponent} />
                 </div>
             </BrowserRouter>
         );

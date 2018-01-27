@@ -11,10 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('test/react', 'TestController@react');
+Route::get('/', 'TestController@react');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
