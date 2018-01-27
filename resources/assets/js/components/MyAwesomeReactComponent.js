@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import {blue300, indigo900} from 'material-ui/styles/colors';
@@ -30,7 +31,6 @@ class MyAwesomeReactComponent extends React.Component {
         pit[i]["win"] = pit[i]["win"] - 2;
         this.setState({pitchers : pit});
     }
-
     handleTouchTap(i) {
         console.log('選択されました');
         let pit = this.state.pitchers;
@@ -64,7 +64,7 @@ class MyAwesomeReactComponent extends React.Component {
             (pitcher,index) => {
                 return (
                     <Chip
-                        backgroundColor={blue300}
+                        backgroundColor='pink'
                         onRequestDelete={this.handleTouchDelete.bind(this,index)}
                         onTouchTap={this.handleTouchTap.bind(this,index)}
                         style={styles.chip}>
@@ -78,8 +78,14 @@ class MyAwesomeReactComponent extends React.Component {
     render() {
         return (
             <MuiThemeProvider>
+                <div style={{marginLeft:"10%",marginRight:"10%"}}>
+                <AppBar
+                    title="特徴とスキル"
+                    iconClassNameRight="muidocs-icon-navigation-expand-more"
+                />
                 <div style={styles.wrapper}>
                     {this.renderPitchers()}
+                </div>
                 </div>
             </MuiThemeProvider>
         );
