@@ -16,3 +16,4 @@ require('./bootstrap');
 require('./components/Example');
 require('./components/Header');
 require('./components/MyAwesomeReactComponent');
+require('./components/App');
