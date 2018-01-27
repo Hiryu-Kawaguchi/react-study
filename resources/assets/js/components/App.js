@@ -122,6 +122,6 @@ const Friend = props => {
 
 export default App
 
-if (document.getElementById('example')) {
-    ReactDOM.render(<App />, document.getElementById('example'));
-}
+// if (document.getElementById('example')) {
+//     ReactDOM.render(<App />, document.getElementById('example'));
+// }

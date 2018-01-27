@@ -4,7 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
-import {blue300, indigo900} from 'material-ui/styles/colors';
+import {blue300, indigo900,pink50} from 'material-ui/styles/colors';
 
 const styles = {
     chip: {
@@ -21,6 +21,8 @@ class MyAwesomeReactComponent extends React.Component {
         super();
         this.state = {
             pitchers: [],
+            user:[],
+            token:'',
         };
         this.handleTouchDelete = this.handleTouchDelete.bind(this);
         this.handleTouchTap = this.handleTouchTap.bind(this);
@@ -36,6 +38,24 @@ class MyAwesomeReactComponent extends React.Component {
         let pit = this.state.pitchers;
         pit[i]["win"] = pit[i]["win"] + 1;
         this.setState({pitchers : pit});
+
+        let data = new FormData();
+        data.append('id', this.state.user.id);
+        fetch('/api/tasks',{
+            method: 'POST',
+            body: data,
+            headers: {
+                'Authorization': 'Bearer '+this.state.token
+            },
+        }).then(
+            response => {
+                return response.json();
+            }
+        ).then(
+            objects => {
+                console.log(objects);
+            }
+        );
     }
     componentDidMount() {
         fetch('/api/foo').then(
@@ -57,6 +77,23 @@ class MyAwesomeReactComponent extends React.Component {
                 this.setState({pitchers:objects});
             }
         );
+        let data = new FormData();
+        data.append('email','adams.aubree@example.org');
+        data.append('password','secret');
+        fetch('/api/authenticate',{
+            method: 'POST',
+            body: data
+        }).then(
+            response => {
+                return response.json();
+            }
+        ).then(
+            objects => {
+                this.setState({user:objects['user']});
+                this.setState({token:objects['token']});
+                console.log(this.state.token)
+            }
+        );
     }
 
     renderPitchers(){
@@ -64,7 +101,7 @@ class MyAwesomeReactComponent extends React.Component {
             (pitcher,index) => {
                 return (
                     <Chip
-                        backgroundColor='pink'
+                        backgroundColor={pink50}
                         onRequestDelete={this.handleTouchDelete.bind(this,index)}
                         onTouchTap={this.handleTouchTap.bind(this,index)}
                         style={styles.chip}>
@@ -77,7 +114,6 @@ class MyAwesomeReactComponent extends React.Component {
     }
     render() {
         return (
-            <MuiThemeProvider>
                 <div style={{marginLeft:"10%",marginRight:"10%"}}>
                 <AppBar
                     title="特徴とスキル"
@@ -87,7 +123,6 @@ class MyAwesomeReactComponent extends React.Component {
                     {this.renderPitchers()}
                 </div>
                 </div>
-            </MuiThemeProvider>
         );
     }
 }

@@ -10,4 +10,9 @@ class TestController extends Controller
     {
         return view('react_test');
     }
+
+    public function task(Request $request){
+        $id = $request['id'];
+        return response()->json(['statue' => 'ok!','id' => $id]);
+    }
 }
