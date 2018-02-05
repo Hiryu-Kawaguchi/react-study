@@ -77,23 +77,7 @@ class MyAwesomeReactComponent extends React.Component {
                 this.setState({pitchers:objects});
             }
         );
-        let data = new FormData();
-        data.append('email','adams.aubree@example.org');
-        data.append('password','secret');
-        fetch('/api/authenticate',{
-            method: 'POST',
-            body: data
-        }).then(
-            response => {
-                return response.json();
-            }
-        ).then(
-            objects => {
-                this.setState({user:objects['user']});
-                this.setState({token:objects['token']});
-                console.log(this.state.token)
-            }
-        );
+
     }
 
     renderPitchers(){
