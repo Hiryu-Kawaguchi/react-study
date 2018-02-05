@@ -4376,7 +4376,7 @@ var MyRoute = function (_React$Component) {
                             null,
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                                { to: '/test/react' },
+                                { to: '/' },
                                 'Home'
                             )
                         ),
@@ -4385,14 +4385,14 @@ var MyRoute = function (_React$Component) {
                             null,
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
-                                { to: '/test/react/Profile' },
+                                { to: '/Profile' },
                                 'Profile'
                             )
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/test/react', component: Home }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: '/test/react/Profile', component: __WEBPACK_IMPORTED_MODULE_3__MyAwesomeReactComponent__["default"] })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { exact: true, path: '/', component: Home }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["c" /* Route */], { path: '/Profile', component: __WEBPACK_IMPORTED_MODULE_3__MyAwesomeReactComponent__["default"] })
                 )
             );
         }
