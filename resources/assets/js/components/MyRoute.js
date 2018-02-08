@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Link , Redirect, withRouter} from 'react-router-dom'
 import MyAwesomeReactComponent from './MyAwesomeReactComponent';
+import TextField from 'material-ui/TextField';
 
 class MyRoute extends React.Component {
     render() {
@@ -12,13 +13,13 @@ class MyRoute extends React.Component {
                     <ul>
                         <li><Link to='/'>Home</Link></li>
                         {/*<li><Link to='/test/react/about'>About</Link></li>*/}
-                        <li><Link to='/Profile'>Profile</Link></li>
+                        <li><Link to='/Profile/51'>Profile</Link></li>
                     </ul>
                     <hr />
                     <Route exact path='/' component={Home} />
                     {/*<Route path='/test/react/about' component={MyAwesomeReactComponent} />*/}
                     <Route path="/login" component={Login}/>
-                    <PrivateRoute path='/Profile' component={MyAwesomeReactComponent} />
+                    <PrivateRoute path='/Profile/:user' component={MyAwesomeReactComponent} />
                 </div>
             </BrowserRouter>
         );
@@ -52,6 +53,7 @@ const AuthButton = withRouter(({ history }) => (
                 history.push('/');
                 localStorage.removeItem('token');
                 localStorage.removeItem('user_id');
+                localStorage.removeItem('user_name');
             })
         }}>Sign out</button>
         </p>
@@ -77,9 +79,16 @@ class Login extends React.Component {
     constructor() {
         super();
         this.state = {
-            redirectToReferrer: false
+            redirectToReferrer: false,
+            email: '',
+            password: '',
         };
         this.login = this.login.bind(this);
+        this.emailChange = this.emailChange.bind(this);
+        this.passwordChange = this.passwordChange.bind(this);
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_id');
+        localStorage.removeItem('user_name');
     }
 
     login(){
@@ -87,8 +96,10 @@ class Login extends React.Component {
         //     this.setState({ redirectToReferrer: true })
         // })
         let data = new FormData();
-        data.append('email','adams.aubree@example.org');
-        data.append('password','secret');
+        //data.append('email','adams.aubree@example.org');
+        data.append('email',this.state.email);
+        //data.append('password','secret');
+        data.append('password',this.state.password);
         fetch('/api/authenticate',{
             method: 'POST',
             body: data
@@ -99,13 +110,27 @@ class Login extends React.Component {
         ).then(
             objects => {
                 localStorage.setItem('user_id', objects['user']['id']);
+                localStorage.setItem('user_name', objects['user']['name']);
                 localStorage.setItem('token', objects['token']);
             }
         );
         if(!localStorage.getItem('token')){
             fakeAuth.authenticate();
+            console.log("ok!");
             this.setState({redirectToReferrer: true});
         }
+    }
+
+    emailChange(event){
+        this.setState({
+            email: event.target.value,
+        });
+    }
+    passwordChange(event){
+        this.setState({
+            password: event.target.value,
+        });
+        console.log(this.state.password);
     }
 
     render() {
@@ -120,6 +145,21 @@ class Login extends React.Component {
         return (
             <div>
                 <p>ログインをお願いします {from.pathname}</p>
+                <TextField
+                    hintText="email"
+                    value={this.state.email}
+                    onChange={this.emailChange}
+                    floatingLabelText="メールアドレス"
+                    floatingLabelFixed={true}
+                /><br />
+                <TextField
+                    hintText="Password"
+                    value={this.state.password}
+                    onChange={this.passwordChange}
+                    floatingLabelText="パスワード"
+                    floatingLabelFixed={true}
+                    type="password"
+                /><br />
                 <button onClick={this.login}>Log in</button>
             </div>
         )

@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import Avatar from 'material-ui/Avatar';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import AutoComplete from 'material-ui/AutoComplete';
 import Chip from 'material-ui/Chip';
 import {blue300, indigo900,pink50} from 'material-ui/styles/colors';
 
@@ -16,81 +19,128 @@ const styles = {
     },
 };
 
+const buttonStyle = {
+    marginRight: 20,
+};
+
 class MyAwesomeReactComponent extends React.Component {
     constructor() {
         super();
         this.state = {
-            pitchers: [],
-            user:[],
+            skills: [],
+            user:localStorage.getItem('user_id'),
             token:'',
+            newSkill:[],
         };
         this.handleTouchDelete = this.handleTouchDelete.bind(this);
         this.handleTouchTap = this.handleTouchTap.bind(this);
+        this.handleUpdateInput = this.handleUpdateInput.bind(this);
+        this.addSkill = this.addSkill.bind(this);
     }
-    handleTouchDelete(i) {
-        console.log('削除ボタンが押されました');
-        let pit = this.state.pitchers;
-        pit[i]["win"] = pit[i]["win"] - 2;
-        this.setState({pitchers : pit});
-    }
-    handleTouchTap(i) {
-        console.log('選択されました');
-        let pit = this.state.pitchers;
-        pit[i]["win"] = pit[i]["win"] + 1;
-        this.setState({pitchers : pit});
-
-        let data = new FormData();
-        data.append('id', this.state.user.id);
-        fetch('/api/tasks',{
+    addSkill(){
+         let data = new FormData();
+         data.append('name', this.state.newSkill);
+         data.append('userid', this.props.match.params.user);
+        fetch('/api/skillset',{
             method: 'POST',
             body: data,
-            headers: {
-                'Authorization': 'Bearer '+this.state.token
-            },
         }).then(
             response => {
                 return response.json();
             }
         ).then(
             objects => {
-                console.log(objects);
+                objects.sort((a, b) => {
+                    if (a.votes < b.votes) return 1;
+                    if (a.votes > b.votes) return -1;
+                    return 0;
+                });
+                this.setState({skills:objects});
+                this.setState({newSkill:['']});
             }
         );
     }
+    handleTouchDelete(i) {
+        console.log('削除ボタンが押されました');
+        let skills = this.state.skills;
+        let data = new FormData();
+        data.append('userid', this.props.match.params.user);
+        data.append('skillid', skills[i]["skill_id"]);
+        fetch('/api/skill/delete',{
+            method: 'POST',
+            body: data,
+        }).then(
+            response => {
+                return response.json();
+            }
+        ).then(
+            objects => {
+                this.setState({skills:objects});
+            }
+        );
+    }
+    handleTouchTap(i) {
+        console.log('選択されました');
+        let skills = this.state.skills;
+        skills[i]["votes"] = skills[i]["votes"] + 1;
+        let data = new FormData();
+        data.append('userid', this.props.match.params.user);
+        data.append('skillid', skills[i]["skill_id"]);
+        data.append('votes', skills[i]["votes"]);
+        fetch('/api/skill/vote',{
+            method: 'POST',
+            body: data,
+        }).then(
+            response => {
+                return response.json();
+            }
+        ).then(
+            objects => {
+                this.setState({skills:objects});
+            }
+        );
+    }
+    handleUpdateInput(value){
+        this.setState({
+            newSkill: [value],
+        });
+    };
     componentDidMount() {
-        fetch('/api/foo').then(
+        fetch('/api/skillset/'+this.props.match.params.user,{
+            method: 'GET',
+        }).then(
             response => {
                 return response.json();
             }
         ).then(
             objects => {
                 objects.sort((a, b) => {
-                    if (a.win < b.win) return 1;
-                    if (a.win > b.win) return -1;
+                    if (a.votes < b.votes) return 1;
+                    if (a.votes > b.votes) return -1;
                     return 0;
                 });
-                for(let pitcher in objects) {
-                    if(objects.hasOwnProperty(pitcher)) {
-                        objects[pitcher]['clicked'] = false;
+                for(let i in objects) {
+                    if(objects.hasOwnProperty(i)) {
+                        objects[i]['clicked'] = false;
                     }
                 }
-                this.setState({pitchers:objects});
+                this.setState({skills:objects});
             }
         );
 
     }
 
-    renderPitchers(){
-        return this.state.pitchers.map(
-            (pitcher,index) => {
+    renderskills(){
+        return this.state.skills.map(
+            (skillscher,index) => {
                 return (
                     <Chip
                         backgroundColor={pink50}
                         onRequestDelete={this.handleTouchDelete.bind(this,index)}
                         onTouchTap={this.handleTouchTap.bind(this,index)}
                         style={styles.chip}>
-                        <Avatar size={32}>{pitcher.win}</Avatar>
-                        {pitcher.name}
+                        <Avatar size={32}>{skillscher.votes}</Avatar>
+                        {skillscher.skill_name}
                     </Chip>
                 );
             }
@@ -103,8 +153,16 @@ class MyAwesomeReactComponent extends React.Component {
                     title="特徴とスキル"
                     iconClassNameRight="muidocs-icon-navigation-expand-more"
                 />
+                <AutoComplete
+                    hintText="新しいスキル"
+                    dataSource={this.state.newSkill}
+                    onUpdateInput={this.handleUpdateInput}
+                />
+                <FloatingActionButton style={buttonStyle} mini={true} onClick={this.addSkill.bind(this)}>
+                    <ContentAdd />
+                </FloatingActionButton>
                 <div style={styles.wrapper}>
-                    {this.renderPitchers()}
+                    {this.renderskills()}
                 </div>
                 </div>
         );

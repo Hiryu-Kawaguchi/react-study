@@ -51,3 +51,11 @@ Route::get('/foo', function ( Request $request ) {
 
     return response()->json( $pitchers );
 } );
+
+//スキル一覧の取得
+Route::get('/skillset/{id}','TestController@GetSkill');
+Route::post('/skillset','TestController@AddSkill');
+//スキルの数字追加
+Route::post('/skill/vote','TestController@AddVotes');
+//スキル消去
+Route::post('/skill/delete','TestController@DeleteSkill');
